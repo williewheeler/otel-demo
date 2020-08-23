@@ -5,6 +5,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.3.RELEASE</version>
+        <relativePath />
+    </parent>
 
     <groupId>com.williewheeler.demos</groupId>
     <artifactId>otel</artifactId>
@@ -14,6 +20,9 @@
 
     <modules>
         <module>ui</module>
+        <module>api</module>
+        <module>provider1</module>
+        <module>provider2</module>
     </modules>
 
     <properties>
@@ -21,19 +30,62 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
+        <!-- Dependency versions -->
+        <grpc.version>1.31.1</grpc.version>
         <junit.version>4.11</junit.version>
+        <lombok.version>1.18.12</lombok.version>
+        <mysqlConnectorJava.version>8.0.21</mysqlConnectorJava.version>
+        <openTelemetry.version>0.7.0</openTelemetry.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- For pushing spans to Jaeger -->
+            <!--
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc.protobuf</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc.netty</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            -->
+
+            <!-- For adding span instrumentation manually -->
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-api</artifactId>
+                <version>${openTelemetry.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
@@ -76,6 +128,22 @@
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <agents>../agents/opentelemetry-javaagent-all.jar</agents>
+                        <systemPropertyVariables>
+                            <otel.exporter>logging</otel.exporter>
+
+                            <!-- Child projects must provide otel.jaeger.service.name -->
+                            <!--
+                            <otel.exporter>jaeger</otel.exporter>
+                            <otel.jaeger.endpoint>jaeger:14250</otel.jaeger.endpoint>
+                            -->
+                        </systemPropertyVariables>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
