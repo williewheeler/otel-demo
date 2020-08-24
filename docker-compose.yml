@@ -8,6 +8,13 @@ services:
     volumes:
       - "./ui/config/application.yml:/config/application.yml"
 
+  otel-api:
+    image: "otel-api:latest"
+    ports:
+      - "8081:8080"
+    volumes:
+      - "./api/config/application.yml:/config/application.yml"
+
   # https://www.jaegertracing.io/docs/1.18/getting-started/
   jaeger:
     image: "jaegertracing/all-in-one:latest"

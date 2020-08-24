@@ -1,9 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <title>OTEL Demo</title>
+  <title>Travel Deals</title>
+  <link rel="stylesheet" href="/core.css">
 </head>
 <body>
-<h1>OTEL Demo</h1>
+<h1>Travel Deals</h1>
+<p>Here are today's deals on flights from Seattle to Las Vegas:</p>
+<table>
+  <thead>
+  <tr>
+    <th>Origin</th>
+    <th>Destination</th>
+    <th>Airline</th>
+    <th>Departing</th>
+    <th>Returning</th>
+    <th># Adults</th>
+    <th># Children</th>
+    <th># Infants</th>
+    <th>Class</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="flight : ${flights}">
+    <td th:text="${flight.origin}"></td>
+    <td th:text="${flight.destination}"></td>
+    <td th:text="${flight.airline}"></td>
+    <td th:text="${flight.departing}"></td>
+    <td th:text="${flight.returning}"></td>
+    <td th:text="${flight.numAdults}"></td>
+    <td th:text="${flight.numChildren}"></td>
+    <td th:text="${flight.numInfants}"></td>
+    <td th:text="${flight.flightClass}"></td>
+  </tr>
+  </tbody>
+</table>
 </body>
 </html>
