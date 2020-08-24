@@ -1,4 +1,4 @@
-package com.williewheeler.demos.otel.ui;
+package com.williewheeler.demos.otel.ui.web;
 
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

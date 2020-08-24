@@ -1,4 +1,4 @@
-package com.williewheeler.demos.otel.api;
+package com.williewheeler.demos.otel.api.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

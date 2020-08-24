@@ -1,17 +1,17 @@
-package com.williewheeler.demos.otel.api;
+package com.williewheeler.demos.otel.api.service;
 
+import com.williewheeler.demos.otel.api.model.Flight;
 import lombok.val;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RestController
-public class FlightController {
+@Service
+public class FlightServiceImpl implements FlightService {
 
-    @GetMapping("/flights")
+    @Override
     public List<Flight> getFlights() {
         val flights = new ArrayList<Flight>();
         flights.add(flight("Delta", new Date(), new Date()));
