@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  otel-ui:
+    image: "otel-ui:latest"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./ui/config/application.yml:/config/application.yml"
+
+  # https://www.jaegertracing.io/docs/1.18/getting-started/
+  jaeger:
+    image: "jaegertracing/all-in-one:latest"
+    ports:
+      - "16686:16686"

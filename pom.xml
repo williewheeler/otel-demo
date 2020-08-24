@@ -27,8 +27,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
 
         <!-- Dependency versions -->
         <grpc.version>1.31.1</grpc.version>
@@ -56,11 +56,13 @@
             -->
 
             <!-- For adding span instrumentation manually -->
+            <!--
             <dependency>
                 <groupId>io.opentelemetry</groupId>
                 <artifactId>opentelemetry-api</artifactId>
                 <version>${openTelemetry.version}</version>
             </dependency>
+            -->
 
             <dependency>
                 <groupId>junit</groupId>
@@ -77,6 +79,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+        </dependency>
+        -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -136,12 +144,6 @@
                         <agents>../agents/opentelemetry-javaagent-all.jar</agents>
                         <systemPropertyVariables>
                             <otel.exporter>logging</otel.exporter>
-
-                            <!-- Child projects must provide otel.jaeger.service.name -->
-                            <!--
-                            <otel.exporter>jaeger</otel.exporter>
-                            <otel.jaeger.endpoint>jaeger:14250</otel.jaeger.endpoint>
-                            -->
                         </systemPropertyVariables>
                     </configuration>
                 </plugin>
