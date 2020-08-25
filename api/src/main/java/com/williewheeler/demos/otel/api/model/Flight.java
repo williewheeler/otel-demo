@@ -1,20 +1,17 @@
 package com.williewheeler.demos.otel.api.model;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import org.springframework.hateoas.RepresentationModel;
 
-import java.util.Date;
+public class Flight extends RepresentationModel<Flight> {
 
-@Data
-@Accessors(chain = true)
-public class Flight {
-    private String origin;
-    private String destination;
-    private String airline;
-    private Date departing;
-    private Date returning;
-    private int numAdults;
-    private int numChildren;
-    private int numInfants;
-    private String flightClass;
+    @Getter
+    private final String content;
+
+    @JsonCreator
+    public Flight(@JsonProperty("content") String content) {
+        this.content = content;
+    }
 }

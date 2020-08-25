@@ -2,36 +2,45 @@ package com.williewheeler.demos.otel.api.service;
 
 import com.williewheeler.demos.otel.api.model.Flight;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class FlightServiceImpl implements FlightService {
 
+    @Autowired
+    private FlightClient flightClient;
+
     @Override
-    public List<Flight> getFlights() {
-        val flights = new ArrayList<Flight>();
-        flights.add(flight("Delta", new Date(), new Date()));
-        flights.add(flight("Delta", new Date(), new Date()));
-        flights.add(flight("Alaska", new Date(), new Date()));
-        flights.add(flight("United", new Date(), new Date()));
-        flights.add(flight("Southwest", new Date(), new Date()));
-        return flights;
+    public CollectionModel<Flight> getFlights() {
+//        return doGetFlightsSerial();
+        return doGetFlightsParallel();
     }
 
-    private Flight flight(String airline, Date departing, Date returning) {
-        return new Flight()
-                .setOrigin("SEA")
-                .setDestination("LAS")
-                .setAirline(airline)
-                .setDeparting(departing)
-                .setReturning(returning)
-                .setNumAdults(2)
-                .setNumChildren(0)
-                .setNumInfants(0)
-                .setFlightClass("Basic Economy");
+    private CollectionModel<Flight> doGetFlightsSerial() {
+        val result = new ArrayList<Flight>();
+        result.addAll(flightClient.getProvider1Flights().getContent());
+        result.addAll(flightClient.getProvider2Flights().getContent());
+        return CollectionModel.of(result);
+    }
+
+    private CollectionModel<Flight> doGetFlightsParallel() {
+        val flights1 = flightClient.getProvider1FlightsAsync();
+        val flights2 = flightClient.getProvider2FlightsAsync();
+        CompletableFuture.allOf(new CompletableFuture[] { flights1, flights2 }).join();
+
+        try {
+            val result = new ArrayList<Flight>();
+            result.addAll(flights1.get().getContent());
+            result.addAll(flights2.get().getContent());
+            return CollectionModel.of(result);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

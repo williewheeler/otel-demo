@@ -15,10 +15,8 @@
     <th>Airline</th>
     <th>Departing</th>
     <th>Returning</th>
-    <th># Adults</th>
-    <th># Children</th>
-    <th># Infants</th>
     <th>Class</th>
+    <th>Price (USD)</th>
   </tr>
   </thead>
   <tbody>
@@ -28,10 +26,8 @@
     <td th:text="${flight.airline}"></td>
     <td th:text="${flight.departing}"></td>
     <td th:text="${flight.returning}"></td>
-    <td th:text="${flight.numAdults}"></td>
-    <td th:text="${flight.numChildren}"></td>
-    <td th:text="${flight.numInfants}"></td>
     <td th:text="${flight.flightClass}"></td>
+    <td th:text="${'$' + flight.price}"></td>
   </tr>
   </tbody>
 </table>

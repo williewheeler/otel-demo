@@ -1,12 +1,62 @@
 version: "3.8"
 
 services:
-  otel-ui:
-    image: "otel-ui:latest"
+
+  # https://hub.docker.com/_/mysql
+  otel-provider1-db:
+    image: "mysql:5.7"
     ports:
-      - "8080:8080"
+      - "3306:3306"
+    restart: "always"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_USER: "provider1"
+      MYSQL_PASSWORD: "p@ssw0rd"
+      MYSQL_DATABASE: "provider1"
     volumes:
-      - "./ui/config/application.yml:/config/application.yml"
+      - "./provider1/dbdata:/var/lib/mysql"
+      - "./provider1/scripts/init-db.sql:/data/application/init-db.sql"
+    command: [
+      "--default-authentication-plugin=mysql_native_password",
+      "--init-file=/data/application/init-db.sql"
+    ]
+
+  # https://hub.docker.com/_/mysql
+  otel-provider2-db:
+    image: "mysql:5.7"
+    ports:
+      - "3307:3306"
+    restart: "always"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_USER: "root"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_USER: "provider2"
+      MYSQL_PASSWORD: "p@ssw0rd"
+      MYSQL_DATABASE: "provider2"
+    volumes:
+      - "./provider2/dbdata:/var/lib/mysql"
+      - "./provider2/scripts/init-db.sql:/data/application/init-db.sql"
+    command: [
+      "--default-authentication-plugin=mysql_native_password",
+      "--init-file=/data/application/init-db.sql"
+    ]
+
+  otel-provider1:
+    image: "otel-provider1:latest"
+    ports:
+      - "8082:8080"
+    volumes:
+      - "./provider1/config/application.yml:/config/application.yml"
+
+  otel-provider2:
+    image: "otel-provider2:latest"
+    ports:
+      - "8083:8080"
+    volumes:
+      - "./provider2/config/application.yml:/config/application.yml"
 
   otel-api:
     image: "otel-api:latest"
@@ -14,6 +64,13 @@ services:
       - "8081:8080"
     volumes:
       - "./api/config/application.yml:/config/application.yml"
+
+  otel-ui:
+    image: "otel-ui:latest"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./ui/config/application.yml:/config/application.yml"
 
   # https://www.jaegertracing.io/docs/1.18/getting-started/
   jaeger:
