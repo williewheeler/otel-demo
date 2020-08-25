@@ -1,4 +1,4 @@
-.PHONE: all clean package docker
+.PHONY: all clean package docker
 
 APP_NAME = "otel-provider1"
 
