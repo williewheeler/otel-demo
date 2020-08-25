@@ -1,15 +1,22 @@
+$(info Using OS    : $(OS))
+$(info Using shell : $(SHELL))
+
+APP_NAME := otel-provider1
+YELLOW := \033[1;33m
+NC := \033[0m
+
 .PHONY: all clean package docker
-
-APP_NAME = "otel-provider1"
-
-YELLOW = \033[1;33m
-NC = \033[0m
 
 all: clean package docker
 
 cleandb:
-	@echo "$(YELLOW)=====[ CLEANING DATABASES: $(APP_NAME) ]=====$(NC)"
+	$(info =====[ CLEANING DATABASES: $(APP_NAME) ]=====)
+	$(info Removing dbdata)
+ifeq ($(OS), Windows_NT)
+	if exist .\dbdata rmdir /Q /S .\dbdata
+else
 	rm -rf ./dbdata
+endif
 
 clean:
 	@echo "$(YELLOW)=====[ CLEANING MAVEN PACKAGE: $(APP_NAME) ]=====$(NC)"
