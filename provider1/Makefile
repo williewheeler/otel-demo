@@ -1,9 +1,8 @@
+APP_NAME := "otel-provider1"
+YELLOW := \033[1;33m
+NC := \033[0m
+
 .PHONY: all clean package docker
-
-APP_NAME = "otel-provider1"
-
-YELLOW = \033[1;33m
-NC = \033[0m
 
 all: clean package docker
 

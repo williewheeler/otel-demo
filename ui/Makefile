@@ -1,14 +1,17 @@
+$(info Using OS    : $(OS))
+$(info Using shell : $(SHELL))
+
+APP_NAME := otel-ui
+YELLOW := \033[1;33m
+NC := \033[0m
+
 .PHONY: all clean package docker
-
-APP_NAME = "otel-ui"
-
-YELLOW = \033[1;33m
-NC = \033[0m
 
 all: clean package docker
 
 clean:
-	@echo "$(YELLOW)=====[ CLEANING MAVEN PACKAGE: $(APP_NAME) ]=====$(NC)"
+#	@echo "$(YELLOW)=====[ CLEANING MAVEN PACKAGE: $(APP_NAME) ]=====$(NC)"
+	$(info =====[ CLEANING MAVEN PACKAGE: $(APP_NAME) ]=====)
 	rm -rf tmp
 	mvn -e clean
 
