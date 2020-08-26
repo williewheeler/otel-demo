@@ -1,7 +1,7 @@
 # NOTE: Users must mount the Spring config file to /config/application.yml.
 
 FROM openjdk:11-jre
-MAINTAINER Willie Wheeler
+LABEL maintainer="Willie Wheeler"
 
 ENV APP_NAME otel-provider1
 ENV APP_HOME /app/bin
