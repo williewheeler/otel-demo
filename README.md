@@ -1,6 +1,8 @@
 # otel-demo
 
-OpenTelemetry auto-instrumentation demo.
+OpenTelemetry auto-instrumentation demo. It features a microservices-based travel app and Jaeger running inside a Docker Compose environment.
+
+Blog post: [Auto-instrumentation with OpenTelemetry](https://medium.com/wwblog/auto-instrumentation-with-opentelemetry-3b096fdd068f)
 
 ## Windows setup
 
@@ -37,3 +39,5 @@ $ docker-compose up
     - API: http://localhost:8083
     - DB: mysql://localhost:3307
 - Jaeger UI: http://localhost:16686
+
+To try it out, just hit the sample app UI a few times, and then look at the traces in Jaeger.
