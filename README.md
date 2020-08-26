@@ -10,9 +10,11 @@ Do the following from an elevated command shell:
 
 1. Install the [Chocolatey](https://chocolatey.org/) package manager.
 2. Install OpenJDK: `choco install openjdk`.
-3. Install `make`: `choco install make`.
-4. Install Docker Desktop for Windows: `choco install docker-desktop`. In the settings, under the Resources section, give Docker 8 GB of memory since you're going to be running several containers.
-4. **Optional:** if you want to play around with the app itself, install Visual Studio Code: `choco install vscode`. Include Java support, and install the Lombok extension as well.
+3. Install Make: `choco install make`.
+4. Install Docker Desktop for Windows: `choco install docker-desktop`. There's some setup, too:
+   - You'll need to decide whether you want to use WSL 2 (Linux) or else Hyper-V as a Docker backend. I recommend WSL 2, as it has better performance. Either way, you'll need to restart your computer.
+   - If you chose Hyper-V, go to Docker Desktop > Settings > Resources, and give yourself 8 GB of memory.
+5. **Optional:** if you want to play around with the app itself, install Visual Studio Code: `choco install vscode`. Include Java support, and install the Lombok extension as well.
 
 ## Build
 
