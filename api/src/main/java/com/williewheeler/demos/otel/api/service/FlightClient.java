@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 @Component
 @Slf4j
@@ -17,9 +16,6 @@ public class FlightClient {
 
     @Autowired
     private RestTemplate restTemplate;
-
-    @Autowired
-    private Executor asyncExecutor;
 
     public CollectionModel<Flight> getProvider1Flights() {
         log.debug("Getting provider 1 flights");

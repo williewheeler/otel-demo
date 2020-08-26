@@ -18,7 +18,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public CollectionModel<Flight> getFlights() {
-//        return doGetFlightsSerial();
+        // return doGetFlightsSerial();
         return doGetFlightsParallel();
     }
 
