@@ -14,7 +14,7 @@ Do the following from an elevated command shell:
 4. Install Docker Desktop for Windows: `choco install docker-desktop`. There's some setup, too:
    - You'll need to decide whether you want to use WSL 2 (Linux) or else Hyper-V as a Docker backend. I recommend WSL 2, as it has better performance. Either way, you'll need to restart your computer.
    - If you chose Hyper-V, go to Docker Desktop > Settings > Resources, and give yourself 8 GB of memory.
-5. **Optional:** if you want to play around with the app itself, install Visual Studio Code: `choco install vscode`. Include Java support, and install the Lombok extension as well.
+5. **Optional:** If you want to play around with the app itself, install Visual Studio Code: `choco install vscode`. Include Java support, and install the Docker and Lombok extensions too. The Docker extension will make it easier to view container logs and shell into containers.
 
 ## Build
 
