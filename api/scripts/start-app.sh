@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 [ -z "$JAVA_XMS" ] && JAVA_XMS=2048m
 [ -z "$JAVA_XMX" ] && JAVA_XMX=2048m
