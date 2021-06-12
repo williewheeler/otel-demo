@@ -1,21 +1,31 @@
 #!/bin/bash
 
-[ -z "$JAVA_XMS" ] && JAVA_XMS=2048m
-[ -z "$JAVA_XMX" ] && JAVA_XMX=2048m
+[ -z "$JAVA_XMS" ] && JAVA_XMS=548m
+[ -z "$JAVA_XMX" ] && JAVA_XMX=548m
 
 set -e
 
 # OpenTelemetry:
 # https://github.com/open-telemetry/opentelemetry-java-instrumentation
+#JAVA_OPTS="${JAVA_OPTS} \
+#  -Xms${JAVA_XMS} \
+#  -Xmx${JAVA_XMX} \
+#  -Dapplication.name=${APP_NAME} \
+#  -Dapplication.home=${APP_HOME} \
+#  -Dotel.exporter=jaeger \
+#  -Dotel.jaeger.endpoint=jaeger:14250 \
+#  -Dotel.jaeger.service.name=otel-provider2 \
+#  -javaagent:${APP_HOME}/opentelemetry-javaagent-all.jar"
+
+export OTEL_RESOURCE_ATTRIBUTES="service.name=${APP_NAME},deployment.environment=dev"
+export OTEL_EXPORTER_OTLP_ENDPOINT='http://splunk-otel-collector:4317'
+
 JAVA_OPTS="${JAVA_OPTS} \
   -Xms${JAVA_XMS} \
   -Xmx${JAVA_XMX} \
   -Dapplication.name=${APP_NAME} \
   -Dapplication.home=${APP_HOME} \
-  -Dotel.exporter=jaeger \
-  -Dotel.jaeger.endpoint=jaeger:14250 \
-  -Dotel.jaeger.service.name=otel-provider2 \
-  -javaagent:${APP_HOME}/opentelemetry-javaagent-all.jar"
+  -javaagent:${APP_HOME}/splunk-otel-javaagent.jar -Dsplunk.metrics.enabled=true"
 
 exec java ${JAVA_OPTS} \
   -jar "${APP_HOME}/${APP_NAME}.jar" \

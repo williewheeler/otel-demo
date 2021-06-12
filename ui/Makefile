@@ -33,8 +33,10 @@ docker:
 ifeq ($(OS), Windows_NT)
 	if not exist .\tmp mkdir .\tmp
 	copy ..\agents\opentelemetry-javaagent-all.jar .\tmp
+	copy ..\agents\splunk-otel-javaagent.jar .\tmp
 else
 	mkdir -p ./tmp
 	cp ../agents/opentelemetry-javaagent-all.jar ./tmp
+	cp ../agents/splunk-otel-javaagent.jar ./tmp
 endif
 	$(DOCKER) build -t $(APP_NAME) .

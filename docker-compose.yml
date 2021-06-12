@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 
 services:
 
@@ -16,11 +16,10 @@ services:
       MYSQL_PASSWORD: "p@ssw0rd"
       MYSQL_DATABASE: "provider1"
     volumes:
-      - "./provider1/dbdata:/var/lib/mysql"
-      - "./provider1/scripts/init-db.sql:/data/application/init-db.sql"
+      - "./provider1/scripts/init-db.sql:/tmp/init-db.sql:Z"
     command: [
       "--default-authentication-plugin=mysql_native_password",
-      "--init-file=/data/application/init-db.sql"
+      "--init-file=/tmp/init-db.sql"
     ]
 
   # https://hub.docker.com/_/mysql
@@ -37,11 +36,10 @@ services:
       MYSQL_PASSWORD: "p@ssw0rd"
       MYSQL_DATABASE: "provider2"
     volumes:
-      - "./provider2/dbdata:/var/lib/mysql"
-      - "./provider2/scripts/init-db.sql:/data/application/init-db.sql"
+      - "./provider2/scripts/init-db.sql:/tmp/init-db.sql:Z"
     command: [
       "--default-authentication-plugin=mysql_native_password",
-      "--init-file=/data/application/init-db.sql"
+      "--init-file=/tmp/init-db.sql"
     ]
 
   otel-provider1:
@@ -49,41 +47,41 @@ services:
     ports:
       - "8082:8080"
     volumes:
-      - "./provider1/config/application.yml:/config/application.yml"
+      - "./provider1/config/application.yml:/config/application.yml:Z"
 
   otel-provider2:
     image: "otel-provider2:latest"
     ports:
       - "8083:8080"
     volumes:
-      - "./provider2/config/application.yml:/config/application.yml"
+      - "./provider2/config/application.yml:/config/application.yml:Z"
 
   otel-api:
     image: "otel-api:latest"
     ports:
       - "8081:8080"
     volumes:
-      - "./api/config/application.yml:/config/application.yml"
+      - "./api/config/application.yml:/config/application.yml:Z"
 
   otel-ui:
     image: "otel-ui:latest"
     ports:
       - "8080:8080"
     volumes:
-      - "./ui/config/application.yml:/config/application.yml"
+      - "./ui/config/application.yml:/config/application.yml:Z"
 
   # https://www.jaegertracing.io/docs/1.18/getting-started/
-  jaeger:
-    image: "jaegertracing/all-in-one:latest"
-    ports:
-      - "16686:16686"
+  #jaeger:
+  #  image: "jaegertracing/all-in-one:latest"
+  #  ports:
+  #    - "16686:16686"
 
   # From https://github.com/signalfx/splunk-otel-collector/blob/main/examples/docker-compose/docker-compose.yml
   splunk-otel-collector:
     image: quay.io/signalfx/splunk-otel-collector:latest
     environment:
-      - SPLUNK_ACCESS_TOKEN=${SPLUNK_ACCESS_TOKEN}
-      - SPLUNK_REALM=${SPLUNK_REALM}
+      SPLUNK_ACCESS_TOKEN: "Jwpf31CWtPi6qFhlm1acZA"
+      SPLUNK_REALM: "us1"
     ports:
       - "13133:13133"
       - "14250:14250"
