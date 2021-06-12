@@ -14,3 +14,7 @@ spring:
       show-sql: false
       generate-ddl: false
       hibernate.naming_strategy: "org.hibernate.cfg.ImprovedNamingStrategy"
+  jpa:
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.MySQLDialect"
