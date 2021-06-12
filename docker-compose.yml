@@ -80,7 +80,7 @@ services:
   splunk-otel-collector:
     image: quay.io/signalfx/splunk-otel-collector:latest
     environment:
-      SPLUNK_ACCESS_TOKEN: "Jwpf31CWtPi6qFhlm1acZA"
+      SPLUNK_ACCESS_TOKEN: "test"
       SPLUNK_REALM: "us1"
     ports:
       - "13133:13133"
