@@ -9,8 +9,7 @@ ENV APP_HOME /app/bin
 RUN mkdir -p ${APP_HOME}
 
 COPY ./target/${APP_NAME}-*.jar ${APP_HOME}/${APP_NAME}.jar
-COPY ./tmp/opentelemetry-javaagent-all.jar ${APP_HOME}/
-COPY ./tmp/splunk-otel-javaagent.jar ${APP_HOME}/
+COPY ./tmp/* ${APP_HOME}/
 COPY ./scripts/start-app.sh ${APP_HOME}/
 
 WORKDIR ${APP_HOME}
