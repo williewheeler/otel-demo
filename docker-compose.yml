@@ -97,11 +97,11 @@ services:
   #    - "16686:16686"
 
   # From https://github.com/signalfx/splunk-otel-collector/blob/main/examples/docker-compose/docker-compose.yml
-  #splunk-otel-collector:
-  #  image: quay.io/signalfx/splunk-otel-collector:latest
-  #  environment:
-  #    SPLUNK_ACCESS_TOKEN: "${SPLUNK_ACCESS_TOKEN}"
-  #    SPLUNK_REALM: "${SPLUNK_REALM}"
+  splunk-otel-collector:
+    image: quay.io/signalfx/splunk-otel-collector:latest
+    environment:
+      SPLUNK_ACCESS_TOKEN: "${SPLUNK_ACCESS_TOKEN}"
+      SPLUNK_REALM: "${SPLUNK_REALM}"
     #ports:
     #  - "13133:13133"
     #  - "14250:14250"
