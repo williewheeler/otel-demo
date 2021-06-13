@@ -1,5 +1,7 @@
 version: "3.3"
 
+#allowed OTEL_EXPORTER=splunk-otel|jaeger
+
 services:
 
   # https://hub.docker.com/_/mysql
@@ -44,6 +46,8 @@ services:
 
   otel-provider1:
     image: "otel-provider1:latest"
+    environment:
+      OTEL_EXPORTER: "${OTEL_EXPORTER}"
     ports:
       - "8082:8080"
     volumes:
@@ -51,6 +55,8 @@ services:
 
   otel-provider2:
     image: "otel-provider2:latest"
+    environment:
+      OTEL_EXPORTER: "${OTEL_EXPORTER}"
     ports:
       - "8083:8080"
     volumes:
@@ -58,6 +64,8 @@ services:
 
   otel-api:
     image: "otel-api:latest"
+    environment:
+      OTEL_EXPORTER: "${OTEL_EXPORTER}"
     ports:
       - "8081:8080"
     volumes:
@@ -65,6 +73,8 @@ services:
 
   otel-ui:
     image: "otel-ui:latest"
+    environment:
+      OTEL_EXPORTER: "${OTEL_EXPORTER}"
     ports:
       - "8080:8080"
     volumes:
@@ -80,16 +90,16 @@ services:
   splunk-otel-collector:
     image: quay.io/signalfx/splunk-otel-collector:latest
     environment:
-      SPLUNK_ACCESS_TOKEN: "test"
-      SPLUNK_REALM: "us1"
-    ports:
-      - "13133:13133"
-      - "14250:14250"
-      - "14268:14268"
-      - "4317:4317"
-      - "6060:6060"
-      - "7276:7276"
-      - "8888:8888"
-      - "9080:9080"
-      - "9411:9411"
-      - "9943:9943"
+      SPLUNK_ACCESS_TOKEN: "${SPLUNK_ACCESS_TOKEN}"
+      SPLUNK_REALM: "${SPLUNK_REALM}"
+    #ports:
+    #  - "13133:13133"
+    #  - "14250:14250"
+    #  - "14268:14268"
+    #  - "4317:4317"
+    #  - "6060:6060"
+    #  - "7276:7276"
+    #  - "8888:8888"
+    #  - "9080:9080"
+    #  - "9411:9411"
+    #  - "9943:9943"
