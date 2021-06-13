@@ -5,6 +5,8 @@ version: "3.3"
 #OTEL_EXPORTER=splunk-otel
 #SPLUNK_ACCESS_TOKEN=test
 #SPLUNK_REALM=us1
+#OTEL_EXPORTER=newrelic
+#NEW_RELIC_LICENSE_KEY=xxx
 
 services:
 
@@ -52,6 +54,7 @@ services:
     image: "otel-provider1:latest"
     environment:
       OTEL_EXPORTER: "${OTEL_EXPORTER}"
+      NEW_RELIC_LICENSE_KEY: "${NEW_RELIC_LICENSE_KEY}"
     ports:
       - "8082:8080"
     volumes:
@@ -61,6 +64,7 @@ services:
     image: "otel-provider2:latest"
     environment:
       OTEL_EXPORTER: "${OTEL_EXPORTER}"
+      NEW_RELIC_LICENSE_KEY: "${NEW_RELIC_LICENSE_KEY}"
     ports:
       - "8083:8080"
     volumes:
@@ -70,6 +74,7 @@ services:
     image: "otel-api:latest"
     environment:
       OTEL_EXPORTER: "${OTEL_EXPORTER}"
+      NEW_RELIC_LICENSE_KEY: "${NEW_RELIC_LICENSE_KEY}"
     ports:
       - "8081:8080"
     volumes:
@@ -79,23 +84,24 @@ services:
     image: "otel-ui:latest"
     environment:
       OTEL_EXPORTER: "${OTEL_EXPORTER}"
+      NEW_RELIC_LICENSE_KEY: "${NEW_RELIC_LICENSE_KEY}"
     ports:
       - "8080:8080"
     volumes:
       - "./ui/config/application.yml:/config/application.yml:Z"
 
   # https://www.jaegertracing.io/docs/1.18/getting-started/
-  jaeger:
-    image: "jaegertracing/all-in-one:latest"
-    ports:
-      - "16686:16686"
+  #jaeger:
+  #  image: "jaegertracing/all-in-one:latest"
+  #  ports:
+  #    - "16686:16686"
 
   # From https://github.com/signalfx/splunk-otel-collector/blob/main/examples/docker-compose/docker-compose.yml
-  splunk-otel-collector:
-    image: quay.io/signalfx/splunk-otel-collector:latest
-    environment:
-      SPLUNK_ACCESS_TOKEN: "${SPLUNK_ACCESS_TOKEN}"
-      SPLUNK_REALM: "${SPLUNK_REALM}"
+  #splunk-otel-collector:
+  #  image: quay.io/signalfx/splunk-otel-collector:latest
+  #  environment:
+  #    SPLUNK_ACCESS_TOKEN: "${SPLUNK_ACCESS_TOKEN}"
+  #    SPLUNK_REALM: "${SPLUNK_REALM}"
     #ports:
     #  - "13133:13133"
     #  - "14250:14250"

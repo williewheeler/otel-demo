@@ -13,4 +13,11 @@ export OTEL_EXPORTER_OTLP_ENDPOINT='http://splunk-otel-collector:4317'
 [ "${OTEL_EXPORTER}" == "splunk-otel" ] && JAVA_OPTS="${JAVA_OPTS} \
   -javaagent:${APP_HOME}/splunk-otel-javaagent.jar -Dsplunk.metrics.enabled=true"
 
+# Newrelic one
+export NEW_RELIC_APP_NAME="${APP_NAME}"
+export NEW_RELIC_LICENSE_KEY="${NEW_RELIC_LICENSE_KEY}"
+
+[ "${OTEL_EXPORTER}" == "newrelic" ] && JAVA_OPTS="${JAVA_OPTS} \
+  -javaagent:${APP_HOME}/newrelic.jar"
+
 
