@@ -1,7 +1,8 @@
 version: "3.3"
 
 #example .env
-#OTEL_EXPORTER=splunk-otel|jaeger
+#OTEL_EXPORTER=jaeger
+#OTEL_EXPORTER=splunk-otel
 #SPLUNK_ACCESS_TOKEN=test
 #SPLUNK_REALM=us1
 
@@ -84,10 +85,10 @@ services:
       - "./ui/config/application.yml:/config/application.yml:Z"
 
   # https://www.jaegertracing.io/docs/1.18/getting-started/
-  #jaeger:
-  #  image: "jaegertracing/all-in-one:latest"
-  #  ports:
-  #    - "16686:16686"
+  jaeger:
+    image: "jaegertracing/all-in-one:latest"
+    ports:
+      - "16686:16686"
 
   # From https://github.com/signalfx/splunk-otel-collector/blob/main/examples/docker-compose/docker-compose.yml
   splunk-otel-collector:
