@@ -1,6 +1,9 @@
 version: "3.3"
 
-#allowed OTEL_EXPORTER=splunk-otel|jaeger
+#example .env
+#OTEL_EXPORTER=splunk-otel|jaeger
+#SPLUNK_ACCESS_TOKEN=test
+#SPLUNK_REALM=us1
 
 services:
 
