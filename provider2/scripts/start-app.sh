@@ -7,7 +7,7 @@ set -e
 
 # OpenTelemetry:
 # https://github.com/open-telemetry/opentelemetry-java-instrumentation
-[ "${OTEL_EXPORTER}" == "splunk-otel" ] && JAVA_OPTS="${JAVA_OPTS} \
+[ "${OTEL_EXPORTER}" == "jaeger" ] && JAVA_OPTS="${JAVA_OPTS} \
   -Xms${JAVA_XMS} \
   -Xmx${JAVA_XMX} \
   -Dapplication.name=${APP_NAME} \
